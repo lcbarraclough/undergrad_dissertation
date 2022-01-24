@@ -41,44 +41,64 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"
   #3. Attempt to make a scatter plot ----
   #  a.invertebrate abundance vs. mean dbh
 (abun_vs_mean <- ggplot(sum_data, aes(x = Mean_DBH, y = Total_abundance, colour = Last_felled)) +
-   geom_point(size = 2) +
+   geom_point(size = 3) +
    theme_bw() + 
    scale_fill_manual(values=cbbPalette) +
    ylab("Total abundance\n") +
-   xlab("\nMean DBH (cm)"))
+   xlab("\nMean DBH (cm)") +
+   theme(axis.text.x = element_text(size = 12),
+         axis.text.y = element_text(size = 12),
+         plot.margin = unit(c(0.5,0.5,0.5,0.5), units = "cm"),
+         legend.text = element_text(size = 10, face = "italic"),
+         legend.title = element_blank()))
   
-#ggsave(abun_vs_mean, file= "Graphs/abun_vs_mean.png")
+#ggsave(abun_vs_mean, file= "Graphs/abun_vs_mean.png",width = 5, height = 5)
   
   # b. margalefs or mehinicks richness index vs. mean dbh
   #margalef's index first
 (margI_vs_mean <- ggplot(sum_data, aes(x = Mean_DBH, y = Margalefs_RI, colour = Last_felled)) +
-    geom_point(size = 2) +
+    geom_point(size = 3) +
     theme_bw() + 
     scale_fill_manual(values=cbbPalette) +
     ylab("Margalef's Richness Index\n") +
-    xlab("\nMean DBH (cm)"))
+    xlab("\nMean DBH (cm)") +
+    theme(axis.text.x = element_text(size = 12),
+                        axis.text.y = element_text(size = 12),
+                        plot.margin = unit(c(0.5,0.5,0.5,0.5), units = "cm"),
+                        legend.text = element_text(size = 10, face = "italic"),
+                        legend.title = element_blank()))
 
-#ggsave(margI_vs_mean, file= "Graphs/margI_vs_mean.png")
+#ggsave(margI_vs_mean, file= "Graphs/margI_vs_mean.png", width = 5, height = 5)
 
   #menhinicks index next
 (menhiI_vs_mean <- ggplot(sum_data, aes(x = Mean_DBH, y = Menhinicks_RI , colour = Last_felled)) +
-    geom_point(size = 2) +
+    geom_point(size = 3) +
     theme_bw() + 
     scale_fill_manual(values=cbbPalette) +
     ylab("Mehinick's Richness Index\n") +
-    xlab("\nMean DBH (cm)"))
+    xlab("\nMean DBH (cm)")+
+    theme(axis.text.x = element_text(size = 12),
+          axis.text.y = element_text(size = 12),
+          plot.margin = unit(c(0.5,0.5,0.5,0.5), units = "cm"),
+          legend.text = element_text(size = 10, face = "italic"),
+          legend.title = element_blank()))
 
-#ggsave(menhiI_vs_mean, file= "Graphs/menhiI_vs_mean.png")
+#ggsave(menhiI_vs_mean, file= "Graphs/menhiI_vs_mean.png", width = 5, height = 5)
 
   # c. simpsons evenness index vs. mean dbh
 (simpsI_vs_mean <- ggplot(sum_data, aes(x = Mean_DBH, y = Simpsons_EI , colour = Last_felled)) +
-    geom_point(size = 2) +
+    geom_point(size = 3) +
     theme_bw() + 
     scale_fill_manual(values=cbbPalette) +
     ylab("Simpson's Evenness Index\n") +
-    xlab("\nMean DBH (cm)"))
+    xlab("\nMean DBH (cm)")+
+    theme(axis.text.x = element_text(size = 12),
+          axis.text.y = element_text(size = 12),
+          plot.margin = unit(c(0.5,0.5,0.5,0.5), units = "cm"),
+          legend.text = element_text(size = 10, face = "italic"),
+          legend.title = element_blank()))
 
-#ggsave(simpsI_vs_mean, file= "Graphs/simpsI_vs_mean.png")
+#ggsave(simpsI_vs_mean, file= "Graphs/simpsI_vs_mean.png", width = 5, height = 5)
 
   # d. make these into a panel 
 hyp1_panel <- grid.arrange(
@@ -92,4 +112,4 @@ hyp1_panel <- grid.arrange(
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
   ncol = 2)
 
-#ggsave(hyp1_panel, file= "Graphs/hyp1_panel.png")
+#ggsave(hyp1_panel, file= "Graphs/hyp1_panel.png", width = 10, height = 10)
