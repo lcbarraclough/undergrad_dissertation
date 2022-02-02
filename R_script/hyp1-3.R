@@ -46,7 +46,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"
 #scale_colour_manual(values=cbbPalette)
 
 #3. Attempt to make a bar plot ----
-#  a.invertebrate abundance bar plot
+#  a.invertebrate abundance bar plot ----
 # (i) original values
 (abun_bar1 <- ggplot(sum_data, aes(x = Last_felled, y = Total_abundance, colour = Last_felled,
                       fill = Last_felled)) +
@@ -64,11 +64,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"
 #ggsave(abun_bar1, file= "Graphs/abun_bar1.png",width = 5, height = 5)
 
 # (ii) mean values
-summary1 <- dplyr :: select(sum_data, Last_felled, Total_abundance) %>% 
-  group_by( ., Last_felled) %>% 
-  summarise( ., mean.abun = mean(Total_abundance)) %>% 
-  mutate( ., standard.dev = sd(mean.abun)) %>% 
-  ungroup()
+summary1 <- dplyr :: select(sum_data, Last_felled, Total_abundance)
 
   #still need to add standard deviation to this
   
@@ -88,7 +84,7 @@ summary1 <- dplyr :: select(sum_data, Last_felled, Total_abundance) %>%
 #ggsave(mean.abun_bar1, filename = "Graphs/hyp1-3abun.png", width = 5, height = 5)
 #need to add error bars 
 
-  #Attempt to make a function and add sd to the dataframe
+  #Attempt to make a function and add sd to the dataframe ----
 #install.packages("plyr")
 library(plyr)
 
@@ -110,21 +106,70 @@ summary2 <- dplyr :: select(sum_data, Last_felled, Total_abundance) %>%
 
 
 
-# b. margalefs or mehinicks richness index vs. mean dbh
+# b. margalefs or mehinicks richness index bar plots by year ----
 #margalef's index first
+summary2 <- dplyr :: select(sum_data, year = Last_felled, MRI = Margalefs_RI, MeRI = Menhinicks_RI)
 
+
+#still need to add standard deviation to this
+
+# sum totals plotted here because I haven't figure out how to calculate mean values with standard deviation
+(MRI_sum <- ggplot(summary2, aes(x = year, y = MRI, colour = year,
+                                        fill = year)) +
+    geom_histogram(stat = "identity", position = "dodge") + 
+    scale_y_continuous(limits = c(0, 5)) +
+    labs(title = "Sum Margalef's richness index by year", 
+         x = "\n Year", y = "Sum Margalef's richness index\n") + 
+    theme_bw() +
+    theme(panel.grid = element_blank(), 
+          axis.text = element_text(size = 12), 
+          axis.title = element_text(size = 12), 
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+)
+
+#ggsave(MRI_sum, filename = "Graphs/MRI_sumhyp1.png", width = 5, height = 5)
 
 #menhinicks index next
+(MeRI_sum <- ggplot(summary2, aes(x = year, y = MeRI, colour = year,
+                                 fill = year)) +
+    geom_histogram(stat = "identity", position = "dodge") + 
+    scale_y_continuous(limits = c(0, 3)) +
+    labs(title = "Sum Mehninicks's richness index by year", 
+         x = "\n Year", y = "Sum Mehninick's richness index\n") + 
+    theme_bw() +
+    theme(panel.grid = element_blank(), 
+          axis.text = element_text(size = 12), 
+          axis.title = element_text(size = 12), 
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+)
+
+#ggsave(MeRI_sum, filename = "Graphs/MeRI_sumhyp1.png", width = 5, height = 5)
 
 
-#ggsave(menhiI_vs_mean.2, file= "Graphs/menhiI_vs_mean2.png", width = 5, height = 5)
+# c. simpsons evenness index bar plot ----
 
-# c. simpsons evenness index vs. mean dbh
+summary3 <- dplyr :: select(sum_data, year = Last_felled, SEI = Simpsons_EI) #%>% 
+ # group_by(year) %>% 
+  #summarise(SEI.mean = mean(SEI), year = year) %>% 
+  #ungroup()
 
+  #plot the sum values
+(SEI_sum <- ggplot(summary3, aes(x = year, y = SEI, colour = year,
+                                 fill = year)) +
+    geom_histogram(stat = "identity", position = "dodge") + 
+    scale_y_continuous(limits = c(0, 1)) +
+    labs(title = "Sum Simpson's Evenness index by year", 
+         x = "\n Year", y = "Sum Simpson's richness index\n") + 
+    theme_bw() +
+    theme(panel.grid = element_blank(), 
+          axis.text = element_text(size = 12), 
+          axis.title = element_text(size = 12), 
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+)
 
-#ggsave(simpsI_vs_mean.2, file= "Graphs/simpsI_vs_mean2.png", width = 5, height = 5)
+#ggsave(SEI_sum, file= "Graphs/SEI_sumhyp1.png", width = 5, height = 5)
 
-# d. make these into a panel 
+# d. make these into a panel ----
 hyp1.2_panel <- grid.arrange(
   abun_vs_mean.2 + ggtitle("(a)") + 
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
@@ -137,3 +182,4 @@ hyp1.2_panel <- grid.arrange(
   ncol = 2)
 
 #ggsave(hyp1.2_panel, file= "Graphs/hyp1_panel2.png", width = 10, height = 10)
+
