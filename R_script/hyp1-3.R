@@ -170,16 +170,16 @@ summary3 <- dplyr :: select(sum_data, year = Last_felled, SEI = Simpsons_EI) #%>
 #ggsave(SEI_sum, file= "Graphs/SEI_sumhyp1.png", width = 5, height = 5)
 
 # d. make these into a panel ----
-hyp1.2_panel <- grid.arrange(
-  abun_vs_mean.2 + ggtitle("(a)") + 
+hyp1.3sum_panel <- grid.arrange(
+   abun_bar1 + ggtitle("(a)") + 
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
-  margI_vs_mean.2 + ggtitle("(b)") + 
+  MRI_sum + ggtitle("(b)") + 
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
-  menhiI_vs_mean.2 + ggtitle("(c)") + 
+  MeRI_sum + ggtitle("(c)") + 
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
-  simpsI_vs_mean.2 + ggtitle("(d)") + 
+  SEI_sum + ggtitle("(d)") + 
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
   ncol = 2)
 
-#ggsave(hyp1.2_panel, file= "Graphs/hyp1_panel2.png", width = 10, height = 10)
+#ggsave(hyp1.3sum_panel, file= "Graphs/hyp1_panel3sum.png", width = 10, height = 10)
 
