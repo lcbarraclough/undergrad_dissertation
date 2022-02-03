@@ -12,6 +12,8 @@
 # 1. Load libraries and data frame ----
 library(tidyverse)
 library(gridExtra)
+#install.packages("plotrix")
+library(plotrix)
 
 sum_data <- read.csv("sum_data2.csv")
   #check data frame loaded properly
@@ -28,18 +30,24 @@ mean_table1 <- group_by(summary1, year) %>%
   summarise(abun.mean = mean(abun)) %>% 
   ungroup() 
 
+  #attempt to add standard deviation
+mean_table1 <- mean_table1 %>% 
+  mutate(mean_table1, sd = c(8.1, 58.1, 3.0)) #entering sd values manually
+
   #plotting mean_table1 as a bar plot
 (mean.abun_bar2 <- ggplot(mean_table1, aes(x = year, y = abun.mean, colour = year,
                                         fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
-    scale_y_continuous(limits = c(0, 80)) +
+    scale_y_continuous(limits = c(0, 150)) +
     labs(title = "Mean invertebrate abundance by year", 
          x = "\n Year", y = "Mean invertebrate abundance\n") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
           axis.title = element_text(size = 12), 
-          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold")) +
+    geom_errorbar(aes(x = year, ymin = abun.mean-sd, ymax = abun.mean+sd),
+                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
 #ggsave(mean.abun_bar2, file = "Graphs/mean_abunhyp1.png", height = 5, width = 5)
@@ -49,20 +57,24 @@ summary2 <- dplyr :: select(sum_data, year = Last_felled, MRI = Margalefs_RI)
 
 mean_table2 <- group_by(summary2, year) %>% 
   summarise(MRI_mean = mean(MRI)) %>% 
-  ungroup() 
+  ungroup() %>% 
+  mutate( ., sd = c(0.27, 0.48, 0.77))
+
 
 #plotting mean_table1 as a bar plot
 (mean_MRI_bar <- ggplot(mean_table2, aes(x = year, y = MRI_mean, colour = year,
                                            fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
-    scale_y_continuous(limits = c(0, 4)) +
+    scale_y_continuous(limits = c(0, 5)) +
     labs(title = "Mean Margalef's richness index by year", 
          x = "\n Year", y = "Mean Margalef's richness index\n") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
           axis.title = element_text(size = 12), 
-          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold")) +
+    geom_errorbar(aes(x = year, ymin = MRI_mean-sd, ymax = MRI_mean+sd),
+                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
 #ggsave(mean_MRI_bar, file = "Graphs/mean_MRIhyp1.png", height = 5, width = 5)
@@ -72,7 +84,8 @@ summary3 <- dplyr :: select(sum_data, year = Last_felled, MeRI = Menhinicks_RI)
 
 mean_table3 <- group_by(summary3, year) %>% 
   summarise(MeRI_mean = mean(MeRI)) %>% 
-  ungroup() 
+  ungroup() %>% 
+  mutate( ., sd = c(0.23, 0.51, 0.55))
 
 #plotting mean_table1 as a bar plot
 (mean_MeRI_bar <- ggplot(mean_table3, aes(x = year, y = MeRI_mean, colour = year,
@@ -85,7 +98,9 @@ mean_table3 <- group_by(summary3, year) %>%
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
           axis.title = element_text(size = 12), 
-          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold")) +
+    geom_errorbar(aes(x = year, ymin = MeRI_mean-sd, ymax = MeRI_mean+sd),
+                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
 #ggsave(mean_MeRI_bar, file = "Graphs/mean_MeRIhyp1.png", height = 5, width = 5)
@@ -95,7 +110,8 @@ summary4 <- dplyr :: select(sum_data, year = Last_felled, SEI = Simpsons_EI)
 
 mean_table4 <- group_by(summary4, year) %>% 
   summarise(SEI_mean = mean(SEI)) %>% 
-  ungroup() 
+  ungroup() %>% 
+  mutate( ., sd = c(0.09, 0.19, 0.16))
 
 #plotting mean_table1 as a bar plot
 (mean_SEI_bar <- ggplot(mean_table4, aes(x = year, y = SEI_mean, colour = year,
@@ -108,7 +124,9 @@ mean_table4 <- group_by(summary4, year) %>%
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
           axis.title = element_text(size = 12), 
-          plot.title = element_text(size = 14, hjust = 0.5, face = "bold"))
+          plot.title = element_text(size = 14, hjust = 0.5, face = "bold")) +
+    geom_errorbar(aes(x = year, ymin = SEI_mean-sd, ymax = SEI_mean+sd),
+                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
 #ggsave(mean_SEI_bar, file = "Graphs/mean_SEIIhyp1.png", height = 5, width = 5)
