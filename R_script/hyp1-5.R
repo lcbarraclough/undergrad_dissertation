@@ -7,7 +7,12 @@
 
 # Work Flow
 # 1. Load libraries and data frame
-# 2. 
+# 2. Plot various bar charts without ant numbers
+#   (i) Abundance
+#   (ii) Margalef's index
+#   (iii) Menhinick's index
+#   (iv) Simpson's index
+# 3. Make these into a panel
 
 
 # 1. Load libraries and data frame ----
@@ -53,23 +58,23 @@ mean_table1.2 <- mean_table1.2 %>%
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
-#ggsave(mean.abun_bar3, file = "Graphs/mean_abunhyp1-2.png", height = 5, width = 5)
+#ggsave(mean.abun_bar2, file = "Graphs/mean_abunhyp1-2.png", height = 5, width = 5)
 
-#   (ii) Margalef's index (code is not working fsr) ----
+#   (ii) Margalef's index ----
 summary2.2 <- dplyr :: select(sum_data2, year = Last_felled, MRI = Margalefs_RI)
 
 mean_table2.2 <- group_by(summary2, year) %>% 
   summarise(MRI_mean = mean(MRI)) %>% 
   ungroup() %>% 
   na.omit() %>% 
-  mutate( ., sd = c(0.13, 0.21, 6.6))
+  mutate( ., sd = c(0.13, 0.21, 6.6)) #there is a very large sd associated with 2008 
 
 
 #plotting mean_table1 as a bar plot
 (mean_MRI_bar.2 <- ggplot(mean_table2.2, aes(x = year, y = MRI_mean, colour = year,
                                              fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
-    scale_y_continuous(limits = c(0, 12) +
+    scale_y_continuous(limits = c(0, 6)) +
                          labs(title = "Mean Margalef's richness index by year", 
                               x = "\n Year", y = "Mean Margalef's richness index\n") + 
                          theme_bw() +
@@ -78,9 +83,10 @@ mean_table2.2 <- group_by(summary2, year) %>%
                                axis.title = element_text(size = 12), 
                                plot.title = element_text(size = 14, hjust = 0.5, face = "bold")) +
                          geom_errorbar(aes(x = year, ymin = MRI_mean-sd, ymax = MRI_mean+sd),
-                                       width = 0.4, colour = "black", alpha = 0.9, size = 0.9))
+                                       width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
+)
 
-(#ggsave(mean_MRI_bar.2, file = "Graphs/mean_MRIhyp1-2.png", height = 5, width = 5)
+#ggsave(mean_MRI_bar.2, file = "Graphs/mean_MRIhyp1-2.png", height = 5, width = 5)
 
 #   (iii) Menhinick's index ----
 summary3.2 <- dplyr :: select(sum_data2, year = Last_felled, MeRI = Menhinicks_RI)
@@ -147,4 +153,4 @@ hyp1.4sum_panel <- grid.arrange(
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
   ncol = 2)
 
-#ggsave(hyp1.4sum_panel, file= "Graphs/hyp1_panel4sum.png", width = 10, height = 10)
+#ggsave(hyp1.4sum_panel, file= "Graphs/hyp1_panel5sum.png", width = 10, height = 10)
