@@ -38,8 +38,8 @@ str(sum_data) #it has so we can move on to testing hypothesis 2.
          axis.text.y = element_text(size = 12),
          plot.margin = unit(c(0.5,0.5,0.5,0.5), units = "cm"),
          legend.text = element_text(size = 10, face = "italic"),
-         legend.title = element_blank()) +
-   geom_smooth(method = "lm") #this isn't working- i think i need to add y~x
+         legend.title = element_blank())
+   
  )
 
 #ggsave(hyp2.2, file= "Graphs/hyp2-2.png", width = 5, height = 5)
