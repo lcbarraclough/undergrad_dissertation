@@ -46,6 +46,7 @@ sum_data$Last_felled <- as.factor(as.character(sum_data$Last_felled))
 abun_anova2 <- aov(Total_abundance ~ Last_felled, data = sum_data)
 summary(abun_anova2)
 
+
 #   (ii)
 marg_anova <- aov(Margalefs_RI ~ Last_felled, data = sum_data)
 summary(marg_anova)
