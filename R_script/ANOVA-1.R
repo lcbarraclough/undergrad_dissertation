@@ -16,6 +16,8 @@
 #   (ii) Margalef's index
 #   (iii) Menhinick's index
 #   (iv) Simpson's index
+# 6. Check assumptions
+
 
 # 1. Load libraries and data frame ----
 library(tidyverse)
@@ -58,3 +60,39 @@ summary(mehn_anova)
 #   (iv)
 simp_anova <- aov(Simpsons_EI ~ Last_felled, data = sum_data)
 summary(simp_anova)
+
+# 6. Check assumptions ----
+  #Assumptions are: data are normally distributes, varainces are homogenous, and observations are independant
+# (i) Abundance
+# Checking for normality
+par(mfrow = c(1,2))
+hist(abun_anova2$residuals)
+plot(abun_anova2, which = 2)
+
+# Checking for homoscedasticity  (homogeneity of variances)
+plot(abun_anova2, which = 1)
+
+# (ii) Margalefs
+par(mfrow = c(1,2))
+hist(marg_anova$residuals)
+plot(marg_anova, which = 2)
+
+# Checking for homoscedasticity  (homogeneity of variances)
+plot(marg_anova, which = 1)
+
+# (iii) Menhinicks
+par(mfrow = c(1,2))
+hist(mehn_anova$residuals)
+plot(mehn_anova, which = 2)
+
+# Checking for homoscedasticity  (homogeneity of variances)
+plot(mehn_anova, which = 1)
+
+
+# (iv) Simpsons
+par(mfrow = c(1,2))
+hist(simp_anova$residuals)
+plot(simp_anova, which = 2)
+
+# Checking for homoscedasticity  (homogeneity of variances)
+plot(simp_anova, which = 1)
