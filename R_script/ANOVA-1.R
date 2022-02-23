@@ -22,8 +22,9 @@
 # 1. Load libraries and data frame ----
 library(tidyverse)
 
+
 setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
-sum_data <- read.csv("sum_data2.csv")
+sum_data <- read.csv("sum_data_noants.csv")
 
 # 2. Research questions and variables ----
   # Research question: How do the different indices for richness
@@ -67,32 +68,34 @@ summary(simp_anova)
 # Checking for normality
 par(mfrow = c(1,2))
 hist(abun_anova2$residuals)
+#residuals aren't quite normally distributed.
 plot(abun_anova2, which = 2)
 
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(abun_anova2, which = 1)
-
+#data is homoscedastic
 # (ii) Margalefs
 par(mfrow = c(1,2))
 hist(marg_anova$residuals)
 plot(marg_anova, which = 2)
+#data is normally distributed but the points don't quite lie on the q-q plot line
 
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(marg_anova, which = 1)
-
+#data is homoscedastic
 # (iii) Menhinicks
 par(mfrow = c(1,2))
 hist(mehn_anova$residuals)
 plot(mehn_anova, which = 2)
-
+#distribution looks slighlty skewed to the left but the qq plot looks good
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(mehn_anova, which = 1)
-
+#points may not be homoscedastic
 
 # (iv) Simpsons
 par(mfrow = c(1,2))
 hist(simp_anova$residuals)
 plot(simp_anova, which = 2)
-
+#distribution is skewed to the left but points lie on the qq
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(simp_anova, which = 1)

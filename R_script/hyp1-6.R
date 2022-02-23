@@ -41,7 +41,7 @@ mean_table1.2 <- group_by(summary1.2, year) %>%
 
 #attempt to add standard deviation
 mean_table1.2 <- mean_table1.2 %>% 
-  mutate(mean_table1.2, sd = c(18.84, 14.94, 24.25)) #entering sd values manually
+  mutate(mean_table1.2, sd = c(9.41, 7.47, 12.12)) #entering sd values manually
 
 #plotting mean_table1 as a bar plot
 (mean.abun_bar2 <- ggplot(mean_table1.2, aes(x = year, y = abun.mean, colour = year,
@@ -50,7 +50,7 @@ mean_table1.2 <- mean_table1.2 %>%
     scale_y_continuous(limits = c(0, 100)) +
     labs(title = "Mean invertebrate abundance by year", 
          x = "\n Year", y = "Mean invertebrate abundance\n",
-         caption = "\nP>0.01, F=3.114, DF=2") + 
+         caption = "\nP>0.01, F=7.05, DF=2") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
@@ -69,7 +69,7 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
   summarise(MRI_mean = mean(MRI)) %>% 
   ungroup() %>% 
   na.omit() %>% 
-  mutate( ., sd = c(0.19, 0.28, 0)) #there is a very large sd associated with 2008 
+  mutate( ., sd = c(0.09, 0.14, 0)) #there is a very large sd associated with 2008 
 
 
 #plotting mean_table1 as a bar plot
@@ -79,7 +79,7 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
     scale_y_continuous(limits = c(0, 2)) +
     labs(title = "Mean Margalef's richness index by year", 
          x = "\n Year", y = "Mean Margalef's richness index\n",
-         caption = "\nP<0.01, F=14.16, DF=2") + 
+         caption = "\nP<0.01, F=49.67, DF=2") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
@@ -97,7 +97,7 @@ summary3.2 <- dplyr :: select(sum_data2, year = Last_felled, MeRI = Menhinicks_R
 mean_table3.2 <- group_by(summary3.2, year) %>% 
   summarise(MeRI_mean = mean(MeRI)) %>% 
   ungroup() %>% 
-  mutate( ., sd = c(0.17, 0.12, 0.09))
+  mutate( ., sd = c(0.09, 0.06, 0.04))
 
 #plotting mean_table1 as a bar plot
 (mean_MeRI_bar.2 <- ggplot(mean_table3.2, aes(x = year, y = MeRI_mean, colour = year,
@@ -106,7 +106,7 @@ mean_table3.2 <- group_by(summary3.2, year) %>%
     scale_y_continuous(limits = c(0, 1.2)) +
     labs(title = "Mean Menhinick's richness index by year", 
          x = "\n Year", y = "Mean Menhinick's richness index\n",
-         caption = "\nP>0.01, F=14.16, DF=2") + 
+         caption = "\nP<0.01, F=32.99, DF=2") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
@@ -124,7 +124,7 @@ summary4.2 <- dplyr :: select(sum_data2, year = Last_felled, SEI = Simpsons_EI)
 mean_table4.2 <- group_by(summary4.2, year) %>% 
   summarise(SEI_mean = mean(SEI)) %>% 
   ungroup() %>% 
-  mutate( ., sd = c(0.04, 0.1, 0.15))
+  mutate( ., sd = c(0.02, 0.05, 0.08))
 
 #plotting mean_table1 as a bar plot
 (mean_SEI_bar.2 <- ggplot(mean_table4.2, aes(x = year, y = SEI_mean, colour = year,
@@ -133,7 +133,7 @@ mean_table4.2 <- group_by(summary4.2, year) %>%
     scale_y_continuous(limits = c(0, 1)) +
     labs(title = "Mean Simpson's evenness index by year", 
          x = "\n Year", y = "Mean Simpson's evenness index\n",
-         caption = "\nP>0.1, F=1.126, DF=2") + 
+         caption = "\nP>0.1, F=2.658, DF=2") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
