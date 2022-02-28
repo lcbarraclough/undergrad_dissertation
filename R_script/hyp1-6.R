@@ -20,7 +20,7 @@ library(gridExtra)
 
 getwd()
 setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
-sum_data2 <- read.csv("sum_data_noants.csv")
+sum_data2 <- read.csv("sum_data_noants3.csv")
 #check data frame loaded properly
 View(sum_data2)
 str(sum_data2)
@@ -32,7 +32,7 @@ sum_data2 <- sum_data2 %>%
 
 # 2. Summary table attempts ----
 #   (i) Mean abundance ----
-summary1.2 <- dplyr :: select(sum_data2, year = Last_felled, abun = Total_abundance)
+summary1.2 <- dplyr :: select(sum_data2, year = Last_felled, abun = Abun_per_area)
 
 mean_table1.2 <- group_by(summary1.2, year) %>% 
   summarise(abun.mean = mean(abun)) %>% 
@@ -47,10 +47,9 @@ mean_table1.2 <- mean_table1.2 %>%
 (mean.abun_bar2 <- ggplot(mean_table1.2, aes(x = year, y = abun.mean, colour = year,
                                              fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
-    scale_y_continuous(limits = c(0, 100)) +
+    scale_y_continuous(limits = c(0, 2)) +
     labs(title = "Mean invertebrate abundance by year", 
-         x = "\n Year", y = "Mean invertebrate abundance\n",
-         caption = "\nP>0.01, F=7.05, DF=2") + 
+         x = "\n Year", y = "Mean invertebrate abundance per m squared\n") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
@@ -78,8 +77,7 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 2)) +
     labs(title = "Mean Margalef's richness index by year", 
-         x = "\n Year", y = "Mean Margalef's richness index\n",
-         caption = "\nP<0.01, F=49.67, DF=2") + 
+         x = "\n Year", y = "Mean Margalef's richness index\n") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
@@ -89,7 +87,7 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
-#ggsave(mean_MRI_bar.2, file = "Graphs/mean_MRIhyp1-2.png", height = 5, width = 5)
+ggsave(mean_MRI_bar.2, file = "Graphs/mean_MRIhyp1-2.png", height = 5, width = 5)
 
 #   (iii) Menhinick's index ----
 summary3.2 <- dplyr :: select(sum_data2, year = Last_felled, MeRI = Menhinicks_RI)
@@ -105,8 +103,7 @@ mean_table3.2 <- group_by(summary3.2, year) %>%
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 1.2)) +
     labs(title = "Mean Menhinick's richness index by year", 
-         x = "\n Year", y = "Mean Menhinick's richness index\n",
-         caption = "\nP<0.01, F=32.99, DF=2") + 
+         x = "\n Year", y = "Mean Menhinick's richness index\n") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 
@@ -132,8 +129,7 @@ mean_table4.2 <- group_by(summary4.2, year) %>%
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 1)) +
     labs(title = "Mean Simpson's evenness index by year", 
-         x = "\n Year", y = "Mean Simpson's evenness index\n",
-         caption = "\nP>0.1, F=2.658, DF=2") + 
+         x = "\n Year", y = "Mean Simpson's evenness index\n") + 
     theme_bw() +
     theme(panel.grid = element_blank(), 
           axis.text = element_text(size = 12), 

@@ -21,7 +21,7 @@ library(gridExtra)
 
 getwd()
 setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
-sum_data2 <- read.csv("sum_data_noants.csv")
+sum_data2 <- read.csv("sum_data_noants3.csv")
 #check data frame loaded properly
 View(sum_data2)
 str(sum_data2)
@@ -44,7 +44,7 @@ theme_lb <- function(){
 
 # 2. Plot various bar charts without ant numbers ----
 #   (i) Abundance
-summary1.2 <- dplyr :: select(sum_data2, year = years_since_disturbance, abun = Total_abundance)
+summary1.2 <- dplyr :: select(sum_data2, year = years_since_disturbance, abun = Abun_per_area)
 
 mean_table1.2 <- group_by(summary1.2, year) %>% 
   summarise(abun.mean = mean(abun)) %>% 
@@ -52,12 +52,12 @@ mean_table1.2 <- group_by(summary1.2, year) %>%
   na.omit()
 
 mean_table1.2 <- mean_table1.2 %>% 
-  mutate(mean_table1.2, sd = c(12.12, 7.47, 9.41))
+  mutate(mean_table1.2, sd = c(0.31, 0.19, 0.24))
 
 (mean.abun_bar3 <- ggplot(mean_table1.2, aes(x = year, y = abun.mean, colour = year,
                                              fill = year)) +
    geom_histogram(stat = "identity", position = "dodge") + 
-   scale_y_continuous(limits = c(0, 100)) +
+   scale_y_continuous(limits = c(0, 2)) +
    labs(x = "\n Number of years since disturbance", y = "Mean invertebrate abundance\n") +
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = abun.mean-sd, ymax = abun.mean+sd),
@@ -82,7 +82,10 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
     labs(x = "\n Number of years since disturbance", y = "Mean Margalef's richness index\n") + 
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = MRI_mean-sd, ymax = MRI_mean+sd),
-                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
+                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9) +
+    annotate("text", x  = 1, y = 0.4, label = "A", size = 6) +
+    annotate("text", x = 2, y = 1.2, label = "B", size = 6) +
+    annotate("text", x = 3, y = 1.9, label = "B", size = 6)
 )
 
 #ggsave(mean_MRI_bar.3, file = "Graphs/MRI_bar3.png", width = 5, height = 5)
@@ -102,7 +105,10 @@ mean_table3.2 <- group_by(summary3.2, year) %>%
     labs(x = "\n Number of years since disturbance", y = "Mean Menhinick's richness index\n") + 
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = MeRI_mean-sd, ymax = MeRI_mean+sd),
-                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
+                  width = 0.4, colour = "black", alpha = 0.9, size = 0.9) +
+    annotate("text", x = 1, y = 0.4, label = "A", size = 6) +
+    annotate("text", x = 2, y = 0.8, label = "B", size = 6) +
+    annotate("text", x = 3, y = 1.1, label = "B", size = 6)
 )
 
 #ggsave(mean_MeRI_bar.3, file = "Graphs/MeRI_bar3.png", height = 5, width = 5)

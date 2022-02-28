@@ -16,7 +16,7 @@ library(gridExtra)
 getwd() #check the working directory 
 
 #Load data frame
-sum_data <- read.csv("sum_data2.csv")
+sum_data <- read.csv("sum_data_noants.csv")
 
 head(sum_data)
 tail(sum_data)
@@ -24,7 +24,7 @@ str(sum_data)
 View(sum_data)
 #Check data has loaded properly
 #Last felled is an integer not a character so we need to change this
-sum_data$Last_felled <- as.character(sum_data$Last_felled)
+sum_data$years_since_disturbance <- as.character(sum_data$years_since_disturbance)
 #check this worked
 str(sum_data) #it has so we can move on to testing hypothesis 2.
 
@@ -45,16 +45,15 @@ str(sum_data) #it has so we can move on to testing hypothesis 2.
 #ggsave(hyp2.2, file= "Graphs/hyp2-2.png", width = 5, height = 5)
 
 # 3. Plotting hypothesis 2 as a box plot ----
-(hyp2.3 <- ggplot(sum_data, aes(x = Last_felled, y = Sapling_count, colour = Last_felled,
-                                fill = Last_felled)) +
+(hyp2.3 <- ggplot(sum_data, aes(x = years_since_disturbance, y = Number_saplings, colour = years_since_disturbance,
+                                fill = years_since_disturbance)) +
    geom_boxplot() +
    theme_bw() +
-   ylab("Sapling count per plot\n") +
-   xlab("\nYear last felled") +
+   labs(x = "\n Number of years since disturbance", y = "Number of saplings per plot\n") +
    theme(axis.text.x = element_text(size = 12),
          axis.text.y = element_text(size = 12),
          plot.margin = unit(c(0.5,0.5,0.5,0.5), units = "cm"),
          legend.text = element_text(size = 10, face = "italic"),
          legend.title = element_blank())
  )
-#ggsave(hyp2.3, file = "Graphs/hyp2-3.png", width = 5, height = 5)
+ggsave(hyp2.3, file = "Graphs/hyp2-3.png", width = 5, height = 5)

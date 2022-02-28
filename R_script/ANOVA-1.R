@@ -17,6 +17,7 @@
 #   (iii) Menhinick's index
 #   (iv) Simpson's index
 # 6. Check assumptions
+# shapiro test
 
 
 # 1. Load libraries and data frame ----
@@ -24,7 +25,7 @@ library(tidyverse)
 
 
 setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
-sum_data <- read.csv("sum_data_noants.csv")
+sum_data <- read.csv("sum_data_noants3.csv")
 
 # 2. Research questions and variables ----
   # Research question: How do the different indices for richness
@@ -46,17 +47,22 @@ sum_data$Last_felled <- as.factor(as.character(sum_data$Last_felled))
 
 # 5. One-way ANOVA ----
 #   (i)
-abun_anova2 <- aov(Total_abundance ~ Last_felled, data = sum_data)
+abun_anova2 <- aov(Abun_per_area ~ Last_felled, data = sum_data)
 summary(abun_anova2)
-
+# this is count data so cannot be used for ANOVA. Divide by size of plot m^2
 
 #   (ii)
 marg_anova <- aov(Margalefs_RI ~ Last_felled, data = sum_data)
 summary(marg_anova)
+# Significant so will do a post hoc test (Tukey test)
+plot(TukeyHSD(marg_anova)) #this hows that 1988 and 1998 are similar but there
+# is a difference between 1988 and 2008.
 
 #   (iii)
 mehn_anova <- aov(Menhinicks_RI ~ Last_felled, data = sum_data)
 summary(mehn_anova)
+# Significant so will do a post hoc test (Tukey test)
+plot(TukeyHSD(mehn_anova))
 
 #   (iv)
 simp_anova <- aov(Simpsons_EI ~ Last_felled, data = sum_data)
@@ -74,6 +80,11 @@ plot(abun_anova2, which = 2)
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(abun_anova2, which = 1)
 #data is homoscedastic
+
+shapiro.test(sum_data2$Abun_per_area)
+# W = 0.85031, p-value = 0.03704
+
+
 # (ii) Margalefs
 par(mfrow = c(1,2))
 hist(marg_anova$residuals)
@@ -83,6 +94,10 @@ plot(marg_anova, which = 2)
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(marg_anova, which = 1)
 #data is homoscedastic
+
+shapiro.test(sum_data2$Margalefs_RI)
+#W = 0.87818, p-value = 0.08307
+
 # (iii) Menhinicks
 par(mfrow = c(1,2))
 hist(mehn_anova$residuals)
@@ -92,6 +107,9 @@ plot(mehn_anova, which = 2)
 plot(mehn_anova, which = 1)
 #points may not be homoscedastic
 
+shapiro.test(sum_data2$Menhinicks_RI)
+#W = 0.95371, p-value = 0.6917
+
 # (iv) Simpsons
 par(mfrow = c(1,2))
 hist(simp_anova$residuals)
@@ -99,3 +117,6 @@ plot(simp_anova, which = 2)
 #distribution is skewed to the left but points lie on the qq
 # Checking for homoscedasticity  (homogeneity of variances)
 plot(simp_anova, which = 1)
+
+shapiro.test(sum_data2$Simpsons_EI)
+#W = 0.84643, p-value = 0.03318
