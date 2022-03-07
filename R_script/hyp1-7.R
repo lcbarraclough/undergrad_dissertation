@@ -42,6 +42,8 @@ theme_lb <- function(){
           legend.position = "none")
 }
 
+tree.palette <- c("#f7fcb9","#addd8e", "#31a354")
+
 # 2. Plot various bar charts without ant numbers ----
 #   (i) Abundance
 summary1.2 <- dplyr :: select(sum_data2, year = years_since_disturbance, abun = Abun_per_area)
@@ -58,6 +60,7 @@ mean_table1.2 <- mean_table1.2 %>%
                                              fill = year)) +
    geom_histogram(stat = "identity", position = "dodge") + 
    scale_y_continuous(limits = c(0, 2)) +
+  scale_fill_manual(values = tree.palette) +
    labs(x = "\n Number of years since disturbance", y = "Mean invertebrate abundance\n") +
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = abun.mean-sd, ymax = abun.mean+sd),
@@ -79,6 +82,7 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
                                              fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 2)) +
+    scale_fill_manual(values = tree.palette) +
     labs(x = "\n Number of years since disturbance", y = "Mean Margalef's richness index\n") + 
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = MRI_mean-sd, ymax = MRI_mean+sd),
@@ -102,13 +106,14 @@ mean_table3.2 <- group_by(summary3.2, year) %>%
                                               fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 1.2)) +
+    scale_fill_manual(values = tree.palette) +
     labs(x = "\n Number of years since disturbance", y = "Mean Menhinick's richness index\n") + 
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = MeRI_mean-sd, ymax = MeRI_mean+sd),
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9) +
-    annotate("text", x = 1, y = 0.4, label = "A", size = 6) +
-    annotate("text", x = 2, y = 0.8, label = "B", size = 6) +
-    annotate("text", x = 3, y = 1.1, label = "B", size = 6)
+    annotate("text", x = 1, y = 0.4, label = "C", size = 6) +
+    annotate("text", x = 2, y = 0.8, label = "D", size = 6) +
+    annotate("text", x = 3, y = 1.1, label = "D", size = 6)
 )
 
 #ggsave(mean_MeRI_bar.3, file = "Graphs/MeRI_bar3.png", height = 5, width = 5)
@@ -125,7 +130,8 @@ mean_table4.2 <- group_by(summary4.2, year) %>%
                                              fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 1)) +
-    labs(x = "\n Year", y = "Mean Simpson's evenness index\n") + 
+    scale_fill_manual(values = tree.palette) +
+    labs(x = "\n Number of years since disturbance", y = "Mean Simpson's evenness index\n") + 
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = SEI_mean-sd, ymax = SEI_mean+sd),
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
@@ -145,5 +151,5 @@ hyp1.5sum_panel <- grid.arrange(
   mean_SEI_bar.3 + ggtitle("(d)") + 
     theme(plot.margin = unit(c(0.2,0.2,0.2,0.2), units = "cm")),
   ncol = 2)
-
 #ggsave(hyp1.5sum_panel, file= "Graphs/hyp1_panel5sum.png", width = 10, height = 12)
+

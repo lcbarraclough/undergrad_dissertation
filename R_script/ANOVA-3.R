@@ -36,7 +36,12 @@ sum_data$Last_felled <- as.factor(as.character(sum_data$Last_felled))
 # There will be more saplings in younger forest stands.
 
 # 4. One-way ANOVA ----
-sapling_anova <- aov(Number_saplings ~ Last_felled, data = sum_data)
+#We need to do a bit of data wrangling first as currently this is count data which is
+#not continuous
+
+sum_data <- mutate(sum_data, saplings_per_area = Number_saplings/(pi*25))
+
+sapling_anova <- aov(saplings_per_area ~ years_since_disturbance, data = sum_data)
 summary(sapling_anova)
 
 # 5. Check assumptions ----
@@ -47,3 +52,6 @@ plot(sapling_anova, which = 2)
 # the qq plot.
 
 plot(sapling_anova, which = 1)
+
+shapiro.test(sum_data$saplings_per_area)
+#passes shapiro wilk normality test
