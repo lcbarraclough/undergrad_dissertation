@@ -53,15 +53,16 @@ mean_table1.2 <- group_by(summary1.2, year) %>%
   ungroup() %>% 
   na.omit()
 
+
 mean_table1.2 <- mean_table1.2 %>% 
-  mutate(mean_table1.2, sd = c(0.31, 0.19, 0.24))
+  mutate(mean_table1.2, sd = c(0.026, 0.149, 0.026))
 
 (mean.abun_bar3 <- ggplot(mean_table1.2, aes(x = year, y = abun.mean, colour = year,
                                              fill = year)) +
    geom_histogram(stat = "identity", position = "dodge") + 
-   scale_y_continuous(limits = c(0, 2)) +
+   scale_y_continuous(limits = c(0, 1)) +
   scale_fill_manual(values = tree.palette) +
-   labs(x = "\n Number of years since disturbance", y = "Mean invertebrate abundance\n") +
+   labs(x = "\n Number of years since disturbance", y = "Mean invertebrate abundance per plot\n") +
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = abun.mean-sd, ymax = abun.mean+sd),
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
@@ -76,12 +77,12 @@ mean_table2.2 <- group_by(summary2.2, year) %>%
   summarise(MRI_mean = mean(MRI)) %>% 
   ungroup() %>% 
   na.omit() %>% 
-  mutate( ., sd = c(0, 0.14, 0.09))
+  mutate( ., sd = c(0.219, 0.217, 0.087))
 
 (mean_MRI_bar.3 <- ggplot(mean_table2.2, aes(x = year, y = MRI_mean, colour = year,
                                              fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
-    scale_y_continuous(limits = c(0, 2)) +
+    scale_y_continuous(limits = c(0, 4)) +
     scale_fill_manual(values = tree.palette) +
     labs(x = "\n Number of years since disturbance", y = "Mean Margalef's richness index\n") + 
     theme_lb() +
@@ -100,20 +101,20 @@ summary3.2 <- dplyr :: select(sum_data2, year = years_since_disturbance, MeRI = 
 mean_table3.2 <- group_by(summary3.2, year) %>% 
   summarise(MeRI_mean = mean(MeRI)) %>% 
   ungroup() %>% 
-  mutate( ., sd = c(0.04, 0.06, 0.09))
+  mutate( ., sd = c(0.136, 0.1, 0.087))
 
 (mean_MeRI_bar.3 <- ggplot(mean_table3.2, aes(x = year, y = MeRI_mean, colour = year,
                                               fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
-    scale_y_continuous(limits = c(0, 1.2)) +
+    scale_y_continuous(limits = c(0, 2.5)) +
     scale_fill_manual(values = tree.palette) +
     labs(x = "\n Number of years since disturbance", y = "Mean Menhinick's richness index\n") + 
     theme_lb() +
     geom_errorbar(aes(x = year, ymin = MeRI_mean-sd, ymax = MeRI_mean+sd),
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9) +
-    annotate("text", x = 1, y = 0.4, label = "C", size = 6) +
-    annotate("text", x = 2, y = 0.8, label = "D", size = 6) +
-    annotate("text", x = 3, y = 1.1, label = "D", size = 6)
+    annotate("text", x = 1, y = 0.4, label = "A", size = 6) +
+    annotate("text", x = 2, y = 0.8, label = "B", size = 6) +
+    annotate("text", x = 3, y = 1.1, label = "B", size = 6)
 )
 
 #ggsave(mean_MeRI_bar.3, file = "Graphs/MeRI_bar3.png", height = 5, width = 5)

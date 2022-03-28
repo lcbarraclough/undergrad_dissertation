@@ -9,7 +9,10 @@
 library(vegan)
 library(ggplot2)
 library(viridis)
-
+#install.packages("ggalt")
+library(ggalt)
+#install.packages("ggrepel")
+library(ggrepel)
 
 getwd()
 bugs2 <- read.csv("nmds2.csv")
@@ -63,7 +66,7 @@ names(tree.palette) <- levels(data_scores2$years_since_disturbance)
 (nmds_plot2 <-  ggplot() +
     geom_text(data = species_scores2,
               aes(x = NMDS1, y = NMDS2, alpha = 0.5, size = 2, label = species),
-              alpha = 0.5) +
+              alpha = 1) +
     geom_point(data = data_scores2,
                aes(x= NMDS1, y = NMDS2, color = years_since_disturbance, size = 2)) +
     geom_polygon(data = data_scores2,
@@ -74,3 +77,20 @@ names(tree.palette) <- levels(data_scores2$years_since_disturbance)
     scale_colour_manual(values = tree.palette))
 
 #ggsave(nmds_plot2, file = "Graphs/hyp3-2.png", width = 5, height = 5)
+
+
+# plot without species names
+(nmds_plot3 <-  ggplot() +
+    geom_encircle(data = data_scores2,
+               aes(x= NMDS1, y = NMDS2,fill = years_since_disturbance, color = years_since_disturbance, size = 2),
+               s_shape = 1, expand = 0, alpha = 0.5) +
+    geom_point(data = species_scores2,
+               aes(x = NMDS1, y = NMDS2, size = 1), alpha = 0.5) +
+    geom_text_repel(data = species_scores2,
+                    aes(x = NMDS1, y = NMDS2, label = species)) +
+    theme_lb() +
+    theme(legend.position = "none") +
+    scale_x_continuous(limits = c(-1, 1.6)) +
+    scale_colour_manual(values = tree.palette))
+
+#ggsave(nmds_plot3, file = "Graphs/hyp3-3.png", width = 5, height = 5)
