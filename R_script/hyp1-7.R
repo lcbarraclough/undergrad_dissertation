@@ -20,7 +20,7 @@ library(tidyverse)
 library(gridExtra)
 
 getwd()
-setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
+setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation/species_indices")
 sum_data2 <- read.csv("sum_data_noants3.csv")
 #check data frame loaded properly
 View(sum_data2)
@@ -28,6 +28,7 @@ str(sum_data2)
 
 #years since felled needs to be a character
 sum_data2$years_since_disturbance <- as.character(sum_data2$years_since_disturbance)
+
 sum_data2 <- sum_data2 %>% 
   na.omit()
 
@@ -43,6 +44,7 @@ theme_lb <- function(){
 }
 
 tree.palette <- c("#f7fcb9","#addd8e", "#31a354")
+
 
 # 2. Plot various bar charts without ant numbers ----
 #   (i) Abundance
