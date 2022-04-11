@@ -10,6 +10,7 @@ library(tidyverse)
 library(gridExtra)
 
 getwd()
+setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation/nmds")
 counts <- read.csv("com_structure.csv")
 counts$years_since_disturbance <- as.character(counts$years_since_disturbance)
 

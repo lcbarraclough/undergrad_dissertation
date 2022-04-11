@@ -24,8 +24,9 @@
 library(tidyverse)
 
 
-setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
+setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation/species_indices")
 sum_data <- read.csv("sum_data_noants3.csv")
+View(sum_data)
 
 # 2. Research questions and variables ----
   # Research question: How do the different indices for richness

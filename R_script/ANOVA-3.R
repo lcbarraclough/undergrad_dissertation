@@ -17,7 +17,7 @@
 library(tidyverse)
 
 getwd()
-setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation")
+setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation/species_indices")
 sum_data <- read.csv("sum_data_noants.csv")
 str(sum_data)
 
