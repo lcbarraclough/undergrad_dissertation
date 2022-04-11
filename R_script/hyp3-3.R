@@ -15,6 +15,7 @@ library(ggalt)
 library(ggrepel)
 
 getwd()
+setwd("C:/Users/lcbar/OneDrive/Documents/Dissertation_proj/undergrad_dissertation/nmds")
 bugs2 <- read.csv("nmds2.csv")
 
 # nmds model

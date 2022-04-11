@@ -104,7 +104,7 @@ mean_table3.2 <- group_by(summary3.2, year) %>%
   summarise(MeRI_mean = mean(MeRI)) %>% 
   ungroup() %>% 
   mutate( ., sd = c(0.136, 0.1, 0.087))
-
+View(mean_table3.2)
 (mean_MeRI_bar.3 <- ggplot(mean_table3.2, aes(x = year, y = MeRI_mean, colour = year,
                                               fill = year)) +
     geom_histogram(stat = "identity", position = "dodge") + 
@@ -122,21 +122,19 @@ mean_table3.2 <- group_by(summary3.2, year) %>%
 #ggsave(mean_MeRI_bar.3, file = "Graphs/MeRI_bar3.png", height = 5, width = 5)
 
 #   (iv) Simpson's index
-summary4.2 <- dplyr :: select(sum_data2, year = years_since_disturbance, SEI = Simpsons_EI)
-
-mean_table4.2 <- group_by(summary4.2, year) %>% 
-  summarise(SEI_mean = mean(SEI)) %>% 
-  ungroup() %>% 
-  mutate( ., sd = c(0.08, 0.05, 0.02))
-
-(mean_SEI_bar.3 <- ggplot(mean_table4.2, aes(x = year, y = SEI_mean, colour = year,
-                                             fill = year)) +
+simpsons <- read.csv("simpsons_di.csv")
+View(simpsons)
+simpsons$time_since_disturbance <- as.character(simpsons$time_since_disturbance)
+  
+(mean_SEI_bar.3 <- ggplot(simpsons, aes(x = time_since_disturbance,
+                                        y = sei, colour = time_since_disturbance,
+                                             fill = time_since_disturbance)) +
     geom_histogram(stat = "identity", position = "dodge") + 
     scale_y_continuous(limits = c(0, 1)) +
     scale_fill_manual(values = tree.palette) +
-    labs(x = "\n Number of years since disturbance", y = "Mean Simpson's evenness index\n") + 
+      labs(x = "\n Number of years since disturbance", y = "Mean Simpson's richness index\n") + 
     theme_lb() +
-    geom_errorbar(aes(x = year, ymin = SEI_mean-sd, ymax = SEI_mean+sd),
+    geom_errorbar(aes(x = time_since_disturbance, ymin = sei -sd, ymax = sei +sd),
                   width = 0.4, colour = "black", alpha = 0.9, size = 0.9)
 )
 
